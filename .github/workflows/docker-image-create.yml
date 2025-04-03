@@ -1,0 +1,33 @@
+name: Docker Image and Registry Push CI
+
+on:
+  pull_request:
+    types: 
+      - labeled
+    
+
+jobs:
+  docker:
+    if: ${{ github.event.label.name == 'CI:BUILD' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v3.4.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_SECRET }}
+
+    -   
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    -
+      name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        push: true
+        tags: stigi/ethereum-go-image-test:latest
