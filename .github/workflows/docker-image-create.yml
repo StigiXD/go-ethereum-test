@@ -1,19 +1,20 @@
-name: Docker Image CI
+name: Docker Image and Registry Push CI
 
 on:
   pull_request:
     types: 
       - labeled
-    branches: [ "master" ]
     
 
 jobs:
-
-  build:
+  docker:
     if: ${{ github.event.label.name == 'CI:BUILD' }}
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v3.4.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_SECRET }}
