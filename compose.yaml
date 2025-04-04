@@ -1,0 +1,19 @@
+name: Go-Ethereum test local devnet
+
+services:
+  app:
+    image: stigi/ethereum-go-image-test   
+    platform: linux/x86_64 
+    ports:
+      - "8545:8545"
+    environment:
+      - ENV_VAR=Local Test
+    networks:
+      - devnet
+    entrypoint: 
+      - geth
+      - --dev
+      
+networks:
+  devnet:
+    driver: bridge
