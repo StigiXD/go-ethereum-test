@@ -1,4 +1,4 @@
-name: test local devnet
+name: go_ethereum_test_local_devnet
 
 services:
   app:
