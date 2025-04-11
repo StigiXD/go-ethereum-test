@@ -4,10 +4,8 @@ services:
   app:
     image: stigi/ethereum-go-image-test   
     platform: linux/x86_64 
-    ports:
-      - "8545:8545"
     environment:
-      - ENV_VAR=Local Test
+      - ENV_VAR=Local Devnet Test
     networks:
       - devnet
     entrypoint: 
@@ -17,7 +15,22 @@ services:
       - --http.addr=0.0.0.0
       - --http.corsdomain=*
       - --verbosity=5
-      
+     
+  smart-contract:
+    image: stigi/test 
+    platform: linux/x86_64
+    ports:
+      - "8545:8545"
+    environment:
+      - ENV_VAR=Deploy Contracts Test
+      - HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=False
+    networks:
+      - devnet
+    depends_on:
+      app:
+        condition: service_started
+    entrypoint: npx hardhat ignition deploy ./ignition/modules/Lock.js --network test
+
 networks:
   devnet:
     driver: bridge

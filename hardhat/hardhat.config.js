@@ -8,7 +8,7 @@ module.exports = {
     hardhat: {
     },
     test: {
-        url: "http://127.0.0.1:8545"
+        url: "http://172.18.0.2:8545"
   	}
   },
   solidity: {
