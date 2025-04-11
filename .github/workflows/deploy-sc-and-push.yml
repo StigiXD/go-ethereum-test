@@ -46,7 +46,7 @@ jobs:
 
       - name: Build and commit image from container
         run: sudo docker commit -p \ 
-            $(sudo docker ps --filter "name=go-ethereumtestlocaldevnet-app-1" -q) stigi/smart-contract-deployment
+            $(sudo docker ps --filter "name=go_ethereum_test_local_devnet-app-1" -q) stigi/smart-contract-deployment
 
       - name: Push image to DockerHub
         run: sudo docker push stigi/smart-contract-deployment
