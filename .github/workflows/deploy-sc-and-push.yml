@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          ref: my-branch
+          ref: feature/hardhat
         
       - name: Test paths
         run: pwd && ls -la
