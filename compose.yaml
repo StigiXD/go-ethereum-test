@@ -2,7 +2,7 @@ name: Go-Ethereum test local devnet
 
 services:
   app:
-    image: stigi/ethereum-go-image-test   
+    image: stigi/ethereum-go-image-test:latest
     platform: linux/x86_64 
     environment:
       - ENV_VAR=Local Devnet Test
@@ -17,7 +17,7 @@ services:
       - --verbosity=5
      
   smart-contract:
-    image: stigi/smart-contract-test
+    image: stigi/smart-contract-test:latest
     platform: linux/x86_64
     ports:
       - "8545:8545"
