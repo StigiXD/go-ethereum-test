@@ -17,7 +17,7 @@ services:
       - --verbosity=5
      
   smart-contract:
-    image: stigi/test 
+    image: stigi/smart-contract-test
     platform: linux/x86_64
     ports:
       - "8545:8545"
