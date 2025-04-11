@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Test paths
+        run: pwd && ls -la
       - name: Run local devnet
         run: sudo docker compose up -d
       -
