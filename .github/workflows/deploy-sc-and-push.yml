@@ -20,7 +20,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
         
       - name: Test paths
-        run: pwd && ls -la
+        run: cd .. && ls -la
 
       - name: Run local devnet
         run: sudo docker compose up -d
