@@ -1,0 +1,48 @@
+name: Deploy Smart contract to devnet and push image to DH
+
+on:
+  pull_request:
+    types: 
+      - labeled
+    
+
+jobs:
+  deploy:
+    if: ${{ github.event.label.name == 'CI:DEPLOY' }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/hardhat
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3.4.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_SECRET }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: hardhat/Dockerfile
+          push: true
+          tags: stigi/smart-contract-test:latest
+      
+      - name: Run local devnet
+        run: sudo docker compose up -d
+
+      - name: Build and commit image from container
+        run: sudo docker commit -p \ 
+            $(sudo docker ps --filter "name=go_ethereum_test_local_devnet-app-1" -q) stigi/smart-contract-deployment
+
+      - name: Push image to DockerHub
+        run: sudo docker push stigi/smart-contract-deployment
+        
+      - name: Destroy local devnet
+        run: sudo docker-compose down
