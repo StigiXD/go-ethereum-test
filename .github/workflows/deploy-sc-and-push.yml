@@ -33,13 +33,6 @@ jobs:
           file: hardhat/Dockerfile
           push: true
           tags: stigi/smart-contract-test:latest
-
-
-      - name: Pull devnet image
-        run: sudo docker pull stigi/ethereum-go-image-test:latest
-
-      - name: Pull hardhat image
-        run: sudo docker pull stigi/smart-contract-test:latest
       
       - name: Run local devnet
         run: sudo docker compose up -d
